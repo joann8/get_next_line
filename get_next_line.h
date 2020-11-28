@@ -6,7 +6,7 @@
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 13:21:31 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 18:08:32 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 23:29:39 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 
 unsigned int	ft_strlen(char *str);
 int				ft_chrn(char *str);
-char			*ft_strjoin(char *s1, char *s2);
+char			*ft_strjoin_gnl(char *s1, char *s2, int *res);
+void			cpy_join(char *s1, char *s2, unsigned int l, unsigned int st);
+void			cpy_update(char *s1, char *s2, unsigned int st);
 void			ft_strdel(char **str);
 int				get_next_line(int fd, char **line);
 

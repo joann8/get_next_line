@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 10:24:39 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 17:06:59 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 23:43:34 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 unsigned int	ft_strlen(char *str)
 {
@@ -40,31 +40,49 @@ int				ft_chrn(char *str)
 	return (0);
 }
 
-char			*ft_strjoin(char *s1, char *s2)
+void			cpy_update(char *src, char *str, unsigned int st)
 {
-	unsigned int	size;
-	unsigned int	i;
-	unsigned int	j;
-	char			*tab;
+	unsigned int j;
 
-	if ((!s1 && !s2) ||
-		!(tab = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
-		return (NULL);
-	i = 0;
-	size = ft_strlen(s1);
-	while (i < size)
-	{
-		tab[i] = s1[i];
-		i++;
-	}
 	j = 0;
-	size = ft_strlen(s2);
-	while (j < size)
+	while (src[st + j])
 	{
-		tab[j + i] = s2[j];
+		str[j] = src[j + st];
 		j++;
 	}
-	tab[i + j] = '\0';
+	str[j] = '\0';
+}
+
+void			cpy_join(char *src, char *str, unsigned int l, unsigned int st)
+{
+	unsigned int j;
+
+	j = 0;
+	while (j < l)
+	{
+		str[j + st] = src[j];
+		j++;
+	}
+	str[j + st] = '\0';
+}
+
+char			*ft_strjoin_gnl(char *s1, char *s2, int *res)
+{
+	unsigned int	s_s1;
+	unsigned int	s_s2;
+	char			*tab;
+
+	if (!s1 && !s2)
+		return (NULL);
+	s_s1 = ft_strlen(s1);
+	s_s2 = ft_strlen(s2);
+	if (!(tab = malloc(sizeof(char) * (s_s1 + s_s2 + 1))))
+	{
+		*res = -1;
+		return (NULL);
+	}
+	cpy_join(s1, tab, s_s1, 0);
+	cpy_join(s2, tab, s_s2, s_s1);
 	free(s1);
 	return (tab);
 }
