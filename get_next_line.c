@@ -6,69 +6,64 @@
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 10:30:02 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 16:49:48 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 17:01:00 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int 	check_error(int fd, char **line)
+int		check_error(int fd, char **line)
 {
-	
-	if (fd < 0) // || fd > 256)
+	if (fd < 0 || fd > 256)
 		return (-1);
 	if (!line)
 		return (-1);
-	if ( BUFFER_SIZE < 1)
+	if (BUFFER_SIZE < 1)
 		return (-1);
 	return (0);
 }
 
 char	*update_str(char *str)
 {
-	char	*tmp;
-	unsigned int i;
-	unsigned int j;
+	char			*tmp;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	if (!str)
 		return (NULL);
-	while(str[i] != '\n' && str[i])
+	while (str[i] != '\n' && str[i])
 		i++;
 	if (!str[i])
 	{
-		//printf("celui ci\n");
 		free(str);
-		return(NULL);
+		return (NULL);
 	}
 	if (!(tmp = malloc(sizeof(char) * (ft_strlen(str) - i + 1))))
 		return (NULL);
-	j = 0;
-	i++;
+	j = 1;
 	while (str[i + j])
 	{
-		tmp[j] = str[i + j];
+		tmp[j - 1] = str[i + j];
 		j++;
 	}
-	tmp[j] = '\0';
-	//printf("celui la\n");
+	tmp[j - 1] = '\0';
 	free(str);
-	//printf("ok\n");
-	return(tmp);
+	return (tmp);
 }
 
 char	*create_line(char *str)
 {
-	char		 	*tmp;
+	char			*tmp;
 	unsigned int	i;
-	
+
 	if (!str)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
 		i++;
-	if (!(tmp = malloc((sizeof(char)*(i + 1)))))
-		return(NULL);
+	if (!(tmp = malloc((sizeof(char) * (i + 1)))))
+		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
 	{
@@ -76,48 +71,34 @@ char	*create_line(char *str)
 		i++;
 	}
 	tmp[i] = '\0';
-	return(tmp);
+	return (tmp);
 }
-	
-int	get_next_line(int fd, char **line)
+
+int		get_next_line(int fd, char **line)
 {
 	static char		*str[256];
 	char			*buf;
-	//char			buf[BUFFER_SIZE + 1];
-	int 			bytes;
-	//char *tmp;
-	
+	int				bytes;
+
 	if (check_error(fd, line) == -1)
 		return (-1);
-//	printf("check1\n");
 	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-//	printf("check2\n");
 	bytes = BUFFER_SIZE;
 	while (bytes > 0 && ft_chrn(str[fd]) == 0)
 	{
 		if ((bytes = read(fd, buf, BUFFER_SIZE)) == -1)
 		{
-			//if (str[fd]) //pas sure
-			//	free(str[fd]);//pas sure
 			free(buf);
-			return(-1);
+			return (-1);
 		}
 		buf[bytes] = '\0';
 		str[fd] = ft_strjoin(str[fd], buf);
 	}
 	free(buf);
-//	printf("check6\n");
 	*line = create_line(str[fd]);
-//	printf("check7\n");
 	str[fd] = update_str(str[fd]);
-//	printf("check8\n");
-//	if (!str[fd])
-	//	free(str[fd]);
-//	printf("check9\n");
-	//str[fd] = tmp;
-//	printf("check10\n");
 	if (bytes == 0)
-		return(0);
-	return(1);
+		return (0);
+	return (1);
 }
