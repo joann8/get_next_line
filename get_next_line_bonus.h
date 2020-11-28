@@ -6,7 +6,7 @@
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 13:21:31 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 17:15:21 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 18:08:53 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 # define GET_NEXT_LINE_BONUS_H
 
-# include <fcntl.h> // necessaire? a voir
 # include <stdlib.h>
 # include <unistd.h>
 
