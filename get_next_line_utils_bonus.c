@@ -6,11 +6,11 @@
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 10:24:39 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 17:16:02 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 17:06:59 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 unsigned int	ft_strlen(char *str)
 {
