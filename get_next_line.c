@@ -6,7 +6,7 @@
 /*   By: jacher <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 10:30:02 by jacher            #+#    #+#             */
-/*   Updated: 2020/11/28 14:59:01 by jacher           ###   ########.fr       */
+/*   Updated: 2020/11/28 16:49:48 by jacher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int 	check_error(int fd, char **line)
 {
 	
-	if (fd < 0 || fd > 256)
+	if (fd < 0) // || fd > 256)
 		return (-1);
-	if (line == NULL)
+	if (!line)
 		return (-1);
 	if ( BUFFER_SIZE < 1)
 		return (-1);
@@ -82,39 +82,41 @@ char	*create_line(char *str)
 int	get_next_line(int fd, char **line)
 {
 	static char		*str[256];
-	//char			*buf;
-	char			buf[BUFFER_SIZE + 1];
+	char			*buf;
+	//char			buf[BUFFER_SIZE + 1];
 	int 			bytes;
 	//char *tmp;
 	
 	if (check_error(fd, line) == -1)
 		return (-1);
-	//if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-	//	return (-1);
-	bytes = 1;
+//	printf("check1\n");
+	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (-1);
+//	printf("check2\n");
+	bytes = BUFFER_SIZE;
 	while (bytes > 0 && ft_chrn(str[fd]) == 0)
 	{
 		if ((bytes = read(fd, buf, BUFFER_SIZE)) == -1)
 		{
-			//if (str[fd])
-			//	free(str[fd]);
-	//		free(buf);
+			//if (str[fd]) //pas sure
+			//	free(str[fd]);//pas sure
+			free(buf);
 			return(-1);
 		}
-		buf[BUFFER_SIZE] = '\0';
+		buf[bytes] = '\0';
 		str[fd] = ft_strjoin(str[fd], buf);
 	}
-	//free(buf);
-	//printf("check6\n");
+	free(buf);
+//	printf("check6\n");
 	*line = create_line(str[fd]);
-	//printf("check7\n");
+//	printf("check7\n");
 	str[fd] = update_str(str[fd]);
-	//printf("check8\n");
+//	printf("check8\n");
 //	if (!str[fd])
 	//	free(str[fd]);
-	//printf("check9\n");
+//	printf("check9\n");
 	//str[fd] = tmp;
-	//printf("check10\n");
+//	printf("check10\n");
 	if (bytes == 0)
 		return(0);
 	return(1);
